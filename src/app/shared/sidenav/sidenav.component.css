@@ -1,0 +1,44 @@
+.sidenav {
+    /* margin-top: 5rem; */
+    margin-top: 3.4rem;
+    /* transition: all .5s ease; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1200;
+}
+
+/* Estilo para el hover en los elementos del navbar */
+.nav-link {
+    /* transition: background-color 0.3s ease, color 0.3s ease; */
+    border-radius: 0;
+}
+
+.nav-link:hover {
+    background-color: #495057;
+    /* Color de fondo oscuro para el hover */
+    color: #ffffff;
+    /* Color de texto blanco */
+}
+
+/* Activo para resaltar el link actual (si lo deseas) */
+.nav-link.active {
+    border-left: 5px solid #005C78;
+    /* Fondo azul para el activo */
+    background-color: #1b1b1b;
+}
+
+
+/* NUEVO SIDENAV */
+/* .side-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20rem;
+    height: 100vh;
+    background-color: var(--negro-dark-mode);
+    border-right: var(--border-bott);
+    z-index: 1200;
+    transform: translateX(-100%); 
+    margin-top: 5rem;
+} */

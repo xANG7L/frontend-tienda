@@ -1,0 +1,98 @@
+<div class="container my-4">
+    <div class="d-flex flex-row-reverse">
+        <button [routerLink]="['/clientes/listar']" class="btn btn-outline-dark "><i
+                class="fa-solid fa-list pe-2"></i>Listar clientes</button>
+    </div>
+    <div class="bg-white my-3 p-4 shadow-lg" style="border-top: 7px solid #005C78;">
+        <h3 class="text-center" style="color: #646769">{{ actualizar ? 'Actualizando cliente':'Creando nuevo cliente' }}
+        </h3>
+        <hr>
+        <form (ngSubmit)="onSubmit(clientForm)" #clientForm="ngForm" class="row">
+            <div class="col-sm-12  col-lg-4 mb-3">
+                <label for="txt-codigo" class="label-form-control">Codigo del cliente:</label>
+                <input id="txt-codigo" type="text" maxlength="10" class="form-control text-danger" name="codigo"
+                    [(ngModel)]="cliente.codigo" #codigo="ngModel" readonly>
+            </div>
+            <div class="col-sm-12  col-lg-4 mb-3">
+                <label for="txt-dui" class="label-form-control">Dui del cliente:</label>
+                <input id="txt-dui" type="text" mask="999999999" maxlength="9" class="form-control"
+                    placeholder="#########" name="dui" [(ngModel)]="cliente.dui" #dui="ngModel" required>
+                @if (errors.dui) {
+                <div class="text-danger">
+                    {{ errors.dui }}
+                </div>
+                }
+            </div>
+            <div class="col-sm-12  col-lg-6 mb-3">
+                <label for="txt-nombre" class="label-form-control">Nombre del cliente:</label>
+                <input id="txt-nombre" maxlength="20" type="text" class="form-control" placeholder="Ex. Juan"
+                    name="nombre" [(ngModel)]="cliente.nombre" #nombre="ngModel" required>
+                @if (errors.nombre) {
+                <div class="text-danger">
+                    {{ errors.nombre }}
+                </div>
+                }
+            </div>
+            <div class="col-sm-12  col-lg-6 mb-3">
+                <label for="txt-apellido" class="label-form-control">Apellido del cliente:</label>
+                <input id="txt-apellido" maxlength="20" type="text" class="form-control" placeholder="Ex. Ramos"
+                    name="apellido" [(ngModel)]="cliente.apellido" #apellido="ngModel" required>
+                @if (errors.apellido) {
+                <div class="text-danger">
+                    {{ errors.apellido }}
+                </div>
+                }
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="txt-ciudad" class="label-form-control">Ciudad:</label>
+                <input id="txt-ciudad" maxlength="50" type="text" class="form-control" placeholder="Ex. San Salvador"
+                    name="ciudad" [(ngModel)]="cliente.ciudad" #ciudad="ngModel">
+                @if ( errors.ciudad ) {
+                <div class="text-danger">
+                    {{ errors.ciudad }}
+                </div>
+                }
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+                <label for="txt-calle" class="label-form-control">Calle:</label>
+                <input id="txt-calle" maxlength="50" type="text" class="form-control" placeholder="Ex. Calle Principal"
+                    name="calle" [(ngModel)]="cliente.calle" #calle="ngModel">
+                @if ( errors.calle ) {
+                <div class="text-danger">
+                    {{ errors.calle }}
+                </div>
+                }
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="txt-casa" class="label-form-control">Casa:</label>
+                <input id="txt-casa" maxlength="20" type="text" class="form-control" placeholder="Casa #6" name="casa"
+                    [(ngModel)]="cliente.casa" #casa="ngModel">
+                @if ( errors.casa ) {
+                <div class="text-danger">
+                    {{ errors.casa }}
+                </div>
+                }
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+                <label for="txt-telefono" class="label-form-control">Telefono del cliente:</label>
+                <input id="txt-telefono" maxlength="10" mask="9999-9999" type="text" class="form-control"
+                    placeholder="####-####" name="telefono" [(ngModel)]="cliente.telefono" #telefono="ngModel">
+                @if ( errors.telefono ) {
+                <div class="text-danger">
+                    {{ errors.telefono }}
+                </div>
+                }
+            </div>
+
+            <div class="d-flex flex-wrap gap-3 mt-4 mb-2">
+                <button type="button" (click)="limpiarForm(clientForm)" class="btn btn-secondary shadow-sm">
+                    Limpiar
+                </button>
+                <button [disabled]="clientForm.invalid" type="submit" class="btn btn-primary shadow-sm">
+                    <i class="fa-regular fa-floppy-disk pe-1"></i>
+                    {{ actualizar ? 'Actualizar':'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="container my-4 pb-3">
+    <h1 class="h3 ms-4">Productos</h1>
+    <div class="shadow card mb-4" style="border-top: 5px solid #005C78;">
+        <div class="card-header">
+            Registrar producto
+        </div>
+        <div class="card-body m-2">
+            <button [routerLink]="['/productos/crear']" class="btn btn-outline-dark">
+                <i class="fa-solid fa-plus pe-2"></i>
+                Nuevo producto
+            </button>
+        </div>
+    </div>
+    <div class="shadow card mb-4" style="border-top: 5px solid #005C78;">
+        <div class="card-header">
+            Listado de productos
+        </div>
+        <div class="card-body m-2">
+            @if (productos.length > 0) {
+            <div class="table-responsive shadow">
+                <table class="table table-bordered table-hover">
+                    <caption class="ps-3">Productos registrados: {{ productos.length }}</caption>
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Categoria</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        @for (producto of productos; track $index) {
+                        <tr>
+                            <td>{{producto.codigo}}</td>
+                            <td>{{producto.nombre}}</td>
+                            <td>${{producto.precio}}</td>
+                            <td>{{producto.categoria.nombre}}: {{producto.categoria.descripcion}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" (click)="actualizarClienteRedirect(producto.codigo)" class="btn btn-secondary btn-sm">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            } @else {
+            <div class="alert alert-warning">
+                No hay productos registrado!
+            </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+@if (detalleVenta.length > 0) {
+<div class="table-responsive pb-">
+    <table class="table table-hover rounded table-bordered">
+        <!-- <caption class="ps-3">Productos registrados: {{ productos.length }}</caption> -->
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Producto</th>
+                <th>Precio unitario</th>
+                <th>Cantidad</th>
+                <th>Monto</th>
+                <th class="text-center">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (detalle of detalleVenta; track $index) {
+            <tr>
+                <td>{{detalle.producto.codigo}}</td>
+                <td>{{detalle.producto.nombre}}</td>
+                <td>$ {{detalle.precioUnitario.toFixed(2)}}</td>
+                <td style="width: 30px;">
+                    <input class="form-control form-control-sm" value="{{detalle.cantidad}}"
+                        (change)="actualizarCantidadProducto(detalle, $event)" min="0" type="number">
+                </td>
+                <td>$ {{detalle.montoTotal.toFixed(2)}}</td>
+                <td class="text-center">
+                    <button class="btn btn-danger btn-sm">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+                <!-- <td>
+                        <div class="btn-group">
+                            <button type="button" (click)="actualizarClienteRedirect(producto.codigo)" class="btn btn-secondary btn-sm">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td> -->
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+} @else {
+<div class="alert alert-warning text-center">
+    <i class="fa-solid fa-triangle-exclamation"></i> Agregar productos a facturar!!
+</div>
+}

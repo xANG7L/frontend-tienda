@@ -1,0 +1,10 @@
+.head {
+    /* background-color: var(--negro-dark-mode);
+    border-bottom: var(--border-bott); */
+    top: 0;
+    left: 0;
+    right: 0;
+    position: sticky;
+    z-index: 1000;
+    /* box-shadow: .1rem .2rem .8rem #0005; */
+}

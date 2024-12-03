@@ -1,0 +1,57 @@
+<div class="sidenav d-flex flex-nowrap overflow-y-auto h-100">
+    <div class="d-flex flex-grow-1 flex-column py-3" style="width: 17rem; background-color: rgb(33,37,41)">
+        <div [routerLink]="['/menu']" style="cursor: pointer;" class="mx-3 mt-2 ps-4 text-white">
+            Menu principal
+        </div>
+        <hr class="text-white mx-3">
+
+        <ul class="nav nav-pills flex-column mb-auto">
+            @for (data of navabarData; track $index) {
+            <li>
+                @if (data.items) {
+                <a (click)="openClose(data)" [ngClass]="data.open ? 'active': ''" class="nav-link text-white px-4 collapsed text-white w-100" style="cursor: pointer;"
+                    data-bs-toggle="collapse" data-bs-target="#dashboard-collapsed" aria-expanded="false">
+                    <i class="{{data.icon}}" style="font-size:20px; width: 30px; height: 20px;">
+                    </i>
+                    <span class="ps-2">
+                        {{ data.nombre }}
+                    </span>
+                </a>
+                <!-- @if (data.open) {
+                    
+                } -->
+                <div class="collapse" id="dashboard-collapsed">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        @for (item of data.items; track $index) {
+                        <li>
+                            <a [routerLink]="[item.link]" routerLinkActive="active" class="nav-link text-white px-4">
+                                <i class="fa-solid fa-caret-right ps-4" style="font-size:20px; width: 30px; height: 20px;">
+                                </i>
+                                <span class="ps-4">
+                                    {{ item.nombre }}
+                                </span>
+                            </a>
+                        </li>
+                        }
+                    </ul>
+                </div>
+                }@else {
+                <a [routerLink]="[data.link]" routerLinkActive="active" class="nav-link text-white px-4">
+                    <i class="{{data.icon}}" style="font-size:20px; width: 30px; height: 20px;">
+                    </i>
+                    <span class="ps-2">
+                        {{ data.nombre }}
+                    </span>
+                </a>
+                }
+            </li>
+            }
+        </ul>
+        <hr>
+    </div>
+</div>
+
+
+<!-- <li class="mb-1"> -->
+
+<!-- </li> -->

@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-sm-12  col-lg-8 mb-3">
+        <label for="txt-busqueda-productos" class="label-form-control">Seleccione el producto a
+            vender:</label>
+
+        <input #input type="text"
+            [placeholder]="categoria.id > 0 ? 'Ingrese el nombre de producto a filtrar...':'Seleccione una categoria'"
+            id="txt-busqueda-productos" [formControl]="productoFiltro" class="form-control" matInput
+            [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="seleccionarProducto($event)" [displayWith]="mostrarProducto">
+            @for (producto of productosFiltrados | async; track $index) {
+            <mat-option [value]="producto">{{ producto.nombre }}</mat-option>
+            }
+
+            <!-- <input #input
+                    type="text"
+                    placeholder="Pick one"
+                    matInput
+                    [formControl]="myControl"
+                    [matAutocomplete]="auto"
+                    (input)="filter()"
+                    (focus)="filter()">
+                    <mat-autocomplete requireSelection #auto="matAutocomplete">
+                        @for (option of filteredOptions; track option) {
+                            <mat-option [value]="option">{{option}}</mat-option>
+                        } -->
+        </mat-autocomplete>
+    </div>
+    <div class="col-sm-12 col-lg-4 mb-3">
+        <label for="select-categorie" class="label-form-control">Categoria de productos:</label>
+        <select name="categoria" (change)="seleccionarCategoriaEvt($event)" class="form-select" id="select-categorie">
+            <option value="0" selected>Seleccione la categoria a buscar</option>
+            @for (categoria of categorias; track $index) {
+            <option [value]="categoria.id">{{categoria.nombre}}</option>
+            }
+        </select>
+    </div>
+</div>

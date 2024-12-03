@@ -1,0 +1,76 @@
+<div class="container my-4">
+    <div class="d-flex flex-row-reverse">
+        <button [routerLink]="['/productos/listar']" class="btn btn-outline-dark "><i
+                class="fa-solid fa-list pe-2"></i>Listar productos</button>
+    </div>
+    <div class="bg-white my-3 p-4 shadow-lg" style="border-top: 7px solid #005C78;">
+        <h3 class="text-center" style="color: #646769"> {{ actualizar ? 'Actualizando ' : 'Creando nuevo ' }}producto
+        </h3>
+        <hr>
+        <form #productoForm="ngForm" (ngSubmit)="onSubmit(productoForm)" class="row">
+            <div class="col-sm-12  col-lg-4 mb-3">
+                <label for="txt-codigo" class="label-form-control">Codigo del producto:</label>
+                <input id="txt-codigo" type="text" placeholder="Codigo de producto" class="form-control" name="codigo"
+                    [(ngModel)]="producto.codigo" #codigo="ngModel" required>
+                @if (errors.codigo) {
+                <div class="text-danger">
+                    {{ errors.codigo }}
+                </div>
+                }
+            </div>
+            <div class="col-sm-12  col-lg-4 mb-3">
+                <label for="txt-nombre" class="label-form-control">Nombre del producto:</label>
+                <input id="txt-nombre" type="text" class="form-control" placeholder="Ex. Gaseosa en lata" name="nombre"
+                    [(ngModel)]="producto.nombre" #nombre="ngModel" required>
+                @if (errors.nombre) {
+                <div class="text-danger">
+                    {{ errors.nombre }}
+                </div>
+                }
+            </div>
+            <div class="col-sm-12  col-lg-4 mb-3">
+                <label for="txt-apellido" class="label-form-control">Precio del producto:</label>
+                <input id="txt-apellido" type="number" placeholder="Precio del producto" class="form-control"
+                    name="precio" min="0" [(ngModel)]="producto.precio" #precio="ngModel" required>
+                @if (errors.precio) {
+                <div class="text-danger">
+                    {{ errors.precio }}
+                </div>
+                }
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="select-categorie" class="label-form-control">Categoria de productos:</label>
+                <select class="form-select" [compareWith]="compararCategorias"
+                    (change)="seleccionarCategoriaEvt($event)" [(ngModel)]="producto.categoria" name="categoria"
+                    #categoria="ngModel" id="select-categorie">
+                    <option selected [ngValue]="undefined">Seleccione la categoria del producto</option>
+                    @for (categoria of categorias; track $index) {
+                    <option [ngValue]="categoria">{{categoria.id}} - {{categoria.nombre}}: {{categoria.descripcion}}
+                    </option>
+                    }
+                </select>
+                @if (errors.categoria) {
+                <div class="text-danger">
+                    {{ errors.categoria }}
+                </div>
+                }
+            </div>
+
+            <div class="col-sm-12 col-md-1 mb-3 align-content-end">
+                <button type="button" class="btn btn-primary">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+
+            <div class="d-flex flex-wrap gap-3 mt-4 mb-2">
+                <button type="button" (click)="onCleanForm(productoForm)" class="btn btn-secondary shadow-sm">
+                    Limpiar
+                </button>
+                <button [disabled]="productoForm.invalid" type="submit" class="btn btn-primary shadow-sm">
+                    <i class="fa-regular fa-floppy-disk pe-1"></i>
+                    {{ actualizar ? 'Actualizar':'Guardar' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
