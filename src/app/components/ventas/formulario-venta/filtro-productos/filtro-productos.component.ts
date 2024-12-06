@@ -8,6 +8,7 @@ import { ProductoService } from '../../../../services/producto.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EMPTY, Observable, exhaustMap, flatMap, map, of, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { Cliente } from '../../../../models/cliente';
 //import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -99,5 +100,7 @@ export class FiltroProductosComponent implements OnInit {
     event.option.deselect();
     // console.log(this.productos);
   };
+
+  
 
 }
