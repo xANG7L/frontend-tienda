@@ -1,77 +1,80 @@
 <div class="container pb-4">
     <div class="w-md-75">
-        <h3 class="h3 text-center mt-4">Facturacion de productos - Tienda BAS-1</h3>
-
-        <div class="card my-2 p-4" style="border-top: 7px solid #005C78;">
-            <div class="text-end d-flex justify-content-start align-items-center">
-                <div class="me-3">
-                    <label for="txt-fechaVenta" class="form-label me-2">Fecha de venta:</label>
-                    <input type="text" id="txt-fechaVenta" class="form-control d-inline-block w-auto text-primary"
-                        value="{{ obtenerFechaActual }}" readonly>
-                </div>
-
-                <div class="me-3">
-                    <label for="txt-correlativo" class="form-label me-2">Correlativo:</label>
-                    <input type="text" id="txt-correlativo" class="form-control d-inline-block w-auto text-danger"
-                        [(ngModel)]="venta.correlativo" name="correlativo" #correlativo="ngModel" readonly>
-                </div>
-            </div>
-        </div>
+        <form #ventaForm='ngForm' (ngSubmit)="onSubmit(ventaForm)">
 
 
-        <!-- parte del lado del cliente -->
-        <div class="card shadow mt-4 my-2" style="border-top: 7px solid #005C78;">
-            <div class="card-header">
-                <h5 class="card-title ms-4">Datos del cliente</h5>
-            </div>
-            <div class="card-body">
-                <cliente-form [venta]="venta" (clienteEventEmmitter)="seleccionarClienteEvt($event)" />
-                
-            </div>
-        </div>
+            <h3 class="h3 text-center mt-4">Facturacion de productos - Tienda BAS-1</h3>
 
-        <div class="card shadow my-4" style="border-top: 7px solid #000000;">
-            <div class="card-header">
-                <h5 class="card-title ms-4">Detalle de la factura:</h5>
-            </div>
-            <div class="card-body">
-                <filtro-productos (productoEventEmitter)="aniadirProducto($event)" />
-                <detalle-venta (actualizarDetalle)="editarDetalleDeVenta($event)" [detalleVenta]="detalleVenta" />
-
-                <!-- MOSTRAR CALCULOS -->
-                @if (detalleVenta.length > 0) {
-                <div class="text-end d-flex justify-content-end align-items-center">
+            <div class="card my-2 p-4" style="border-top: 7px solid #005C78;">
+                <div class="text-end d-flex justify-content-start align-items-center">
                     <div class="me-3">
-                        <label for="subtotal" class="form-label me-2">Subtotal: $</label>
-                        <input type="text" id="subtotal" class="form-control d-inline-block w-auto"
-                            [(ngModel)]="venta.subTotal" name="subTotal" #subTotal="ngModel" readonly>
+                        <label for="txt-fechaVenta" class="form-label me-2">Fecha de venta:</label>
+                        <input type="text" id="txt-fechaVenta" class="form-control d-inline-block w-auto text-primary"
+                            value="{{ obtenerFechaActual }}" readonly>
                     </div>
+
                     <div class="me-3">
-                        <label for="iva" class="form-label me-2">IVA: $</label>
-                        <input type="text" id="iva" class="form-control d-inline-block w-auto" [(ngModel)]="venta.iva"
-                            name="iva" #iva="ngModel" readonly>
-                    </div>
-                    <div>
-                        <label for="total" class="form-label me-2">Total: $</label>
-                        <input type="text" id="total" class="form-control d-inline-block w-auto"
-                            [(ngModel)]="venta.total" name="total" #total="ngModel" readonly>
-                    </div>
-                </div>
-                }
-
-            </div>
-            <div class="card-footer">
-                <div class="row text-end">
-                    <div class="col">
-                        <button class="btn btn-secondary m-2">Cancelar</button>
-                        <button [disabled]="detalleVenta.length < 1" class="btn btn-success m-2">
-                            <i class="fa-solid fa-file-invoice me-2"></i>
-                            Facturar</button>
+                        <label for="txt-correlativo" class="form-label me-2">Correlativo:</label>
+                        <input type="text" id="txt-correlativo" class="form-control d-inline-block w-auto text-danger"
+                            [(ngModel)]="venta.correlativo" name="correlativo" #correlativo="ngModel" readonly>
                     </div>
                 </div>
             </div>
-        </div>
 
 
+            <!-- parte del lado del cliente -->
+            <div class="card shadow mt-4 my-2" style="border-top: 7px solid #005C78;">
+                <div class="card-header">
+                    <h5 class="card-title ms-4">Datos del cliente</h5>
+                </div>
+                <div class="card-body">
+                    <cliente-form [venta]="venta" (clienteEventEmmitter)="seleccionarClienteEvt($event)" />
+
+                </div>
+            </div>
+
+            <div class="card shadow my-4" style="border-top: 7px solid #000000;">
+                <div class="card-header">
+                    <h5 class="card-title ms-4">Detalle de la factura:</h5>
+                </div>
+                <div class="card-body">
+                    <filtro-productos (productoEventEmitter)="aniadirProducto($event)" />
+                    <detalle-venta (actualizarDetalle)="editarDetalleDeVenta($event)" (eliminarDetalle)="eliminarProducto($event)" [detalleVenta]="detalleVenta" />
+
+                    <!-- MOSTRAR CALCULOS -->
+                    @if (detalleVenta.length > 0) {
+                    <div class="text-end d-flex justify-content-end align-items-center">
+                        <div class="me-3">
+                            <label for="subtotal" class="form-label me-2">Subtotal: $</label>
+                            <input type="text" id="subtotal" class="form-control d-inline-block w-auto"
+                                [(ngModel)]="venta.subTotal" name="subTotal" #subTotal="ngModel" readonly>
+                        </div>
+                        <div class="me-3">
+                            <label for="iva" class="form-label me-2">IVA: $</label>
+                            <input type="text" id="iva" class="form-control d-inline-block w-auto"
+                                [(ngModel)]="venta.iva" name="iva" #iva="ngModel" readonly>
+                        </div>
+                        <div>
+                            <label for="total" class="form-label me-2">Total: $</label>
+                            <input type="text" id="total" class="form-control d-inline-block w-auto"
+                                [(ngModel)]="venta.total" name="total" #total="ngModel" readonly>
+                        </div>
+                    </div>
+                    }
+
+                </div>
+                <div class="card-footer">
+                    <div class="row text-end">
+                        <div class="col">
+                            <button class="btn btn-secondary m-2">Cancelar</button>
+                            <button type="submit" [disabled]="detalleVenta.length < 1 && ventaForm.invalid" class="btn btn-success m-2">
+                                <i class="fa-solid fa-file-invoice me-2"></i>
+                                Facturar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
     </div>
 </div>

@@ -3,12 +3,14 @@ import { Router, RouterLink } from '@angular/router';
 import { ProductoService } from '../../../services/producto.service';
 import { Producto } from '../../../models/producto';
 import { IBusquedaParam } from '../../../interfaces/IBusquedaParam';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-tabla-productos',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    NgxPaginationModule
   ],
   templateUrl: './tabla-productos.component.html',
   styleUrl: './tabla-productos.component.css'
@@ -20,6 +22,8 @@ export class TablaProductosComponent implements OnInit {
   parametro!: IBusquedaParam;
 
   productos: Producto[] = [];
+
+  currentPage: number = 1;
 
   constructor(private service: ProductoService, private router: Router) {
     this.parametros = [

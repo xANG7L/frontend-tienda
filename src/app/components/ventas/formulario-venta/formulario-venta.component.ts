@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Cliente } from '../../../models/cliente';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Categoria } from '../../../models/categoria';
-import { ProductoService } from '../../../services/producto.service';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { FiltroProductosComponent } from './filtro-productos/filtro-productos.component';
 import { ClienteFormComponent } from './cliente-form/cliente-form.component';
 import { Venta } from '../../../models/venta';
@@ -13,6 +8,8 @@ import { DetalleVenta } from '../../../models/detalleVenta';
 import { Producto } from '../../../models/producto';
 import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
 import { VentaService } from '../../../services/venta.service';
+import Swal from 'sweetalert2';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'formulario-venta',
@@ -47,7 +44,10 @@ export class FormularioVentaComponent implements OnInit {
     this.venta.fechaVenta = new Date();
     this.service.generarCorrelativo().subscribe(
       {
-        next: json => this.venta.correlativo = json.correlativo as string,
+        next: json => {
+          this.venta.correlativo = json.correlativo as string;
+          this.venta.codigoVenta = json.codigo as number;
+        },
         error: err => console.log(err)
       }
     )
@@ -78,6 +78,11 @@ export class FormularioVentaComponent implements OnInit {
     this.calcularTotales();
   }
 
+  eliminarProducto(codigoProducto: string): void {
+    this.detalleVenta = [...this.detalleVenta.filter(dv => dv.producto.codigo != codigoProducto)];
+    this.calcularTotales();
+  }
+
   calcularTotales(): void {
     const totalSinIva = this.detalleVenta.reduce((total, dVenta) => total + (dVenta.cantidad * dVenta.precioUnitario), 0);
     const iva = totalSinIva * 0.13;
@@ -100,6 +105,43 @@ export class FormularioVentaComponent implements OnInit {
     }
     //return `${anio}-${mes}-${dia}`;
     return `${dia}/${mes}/${anio}`;
+  }
+
+  onSubmit(ventaForm: NgForm) {
+    this.venta.detalleVenta = this.detalleVenta;
+
+    this.service.facturarVenta(this.venta).subscribe({
+      next: res => {
+        Swal.fire({
+          title: res.mensaje as string,
+          text: "Venta facturada con exito!!",
+          icon: "success"
+        }).then(() => {
+          this.service.descargarFactura(this.venta.codigoVenta).subscribe({
+            next: (response: HttpResponse<Blob>) => {
+              const pdfFactura = response.body!;
+              //const contentDisposition = response.headers.get('Content-Disposition');
+              let fileName = `Factura_${this.venta.correlativo}.pdf`;
+              // Crea la URL del Blob y descarga el archivo
+              const blobUrl = URL.createObjectURL(pdfFactura);
+              const link = document.createElement('a');
+              link.href = blobUrl;
+              link.download = fileName;
+              link.click();
+              URL.revokeObjectURL(blobUrl);
+              ventaForm.resetForm();
+              window.location.reload();
+            }
+          })
+
+        });
+      },
+      error: err => {
+        console.log(err);
+        alert('Error al facturar la venta')
+      }
+    })
+    // console.log(this.venta);
   }
 
 }

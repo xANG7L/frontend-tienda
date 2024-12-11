@@ -19,7 +19,7 @@
             <div class="mb-2">
                 <h6>Busqueda de clientes</h6>
                 <div class="row mb-2">
-                    <div class="col-3">
+                    <!-- <div class="col-3">
                         <select (change)="seleccionarParametroEvt($event)" name="parametro" class="form-select" id="select-categorie">
                             <option [ngValue]="undefined" selected>Seleccione el parametro</option>
                             @for (p of parametros; track $index) {
@@ -28,9 +28,10 @@
                             </option>
                             }
                         </select>
-                    </div>
-                    <div class="col-9">
-                        <input class="form-control" (input)="filtrarClientes($event)" type="text" placeholder="Busqueda de clientes...">
+                    </div> -->
+                    <div class="col-12">
+                        <input class="form-control" (input)="filtrarClientes($event)" type="text"
+                            placeholder="Busqueda de clientes por nombre completo...">
                     </div>
                 </div>
             </div>
@@ -53,7 +54,7 @@
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
-                        @for (cliente of clientes; track $index) {
+                        @for (cliente of clientes| paginate: { itemsPerPage: 10, currentPage }; track $index) {
                         <tr>
                             <td>{{cliente.codigo}}</td>
                             <td>{{cliente.dui}}</td>
@@ -79,6 +80,10 @@
                         }
                     </tbody>
                 </table>
+            </div>
+            <div class="text-center mt-2">
+                <pagination-controls (pageChange)="currentPage = $event" previousLabel="Anterior"
+                    nextLabel="Siguiente"></pagination-controls>
             </div>
             } @else {
             <div class="alert alert-warning">

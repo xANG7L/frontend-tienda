@@ -6,11 +6,13 @@ import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { IBusquedaParam } from '../../../interfaces/IBusquedaParam';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-tabla-clientes',
   standalone: true,
   imports: [
+    NgxPaginationModule,
     RouterLink,
     ReactiveFormsModule
   ],
@@ -26,6 +28,8 @@ export class TablaClientesComponent implements OnInit {
   clientes: Cliente[] = [];
 
   actualizando: boolean = false;
+
+  currentPage: number = 1;
 
   constructor(private clienteService: ClienteService, private route: Router) {
     this.parametros = [

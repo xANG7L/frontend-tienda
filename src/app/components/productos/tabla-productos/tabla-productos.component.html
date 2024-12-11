@@ -30,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
-                        @for (producto of productos; track $index) {
+                        @for (producto of productos | paginate: { itemsPerPage: 10, currentPage }; track $index) {
                         <tr>
                             <td>{{producto.codigo}}</td>
                             <td>{{producto.nombre}}</td>
@@ -38,18 +38,23 @@
                             <td>{{producto.categoria.nombre}}: {{producto.categoria.descripcion}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" (click)="actualizarClienteRedirect(producto.codigo)" class="btn btn-secondary btn-sm">
+                                    <button type="button" (click)="actualizarClienteRedirect(producto.codigo)"
+                                        class="btn btn-secondary btn-sm">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-sm">
+                                    <!-- <button type="button" class="btn btn-danger btn-sm">
                                         <i class="fa-solid fa-trash"></i>
-                                    </button>
+                                    </button> -->
                                 </div>
                             </td>
                         </tr>
                         }
                     </tbody>
                 </table>
+            </div>
+            <div class="text-center mt-2">
+                <pagination-controls (pageChange)="currentPage = $event" previousLabel="Anterior"
+                    nextLabel="Siguiente"></pagination-controls>
             </div>
             } @else {
             <div class="alert alert-warning">

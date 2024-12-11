@@ -14,11 +14,17 @@ export class DetalleVentaComponent {
 
   @Output() actualizarDetalle: EventEmitter<DetalleVenta> = new EventEmitter();
 
+  @Output() eliminarDetalle:EventEmitter<string> = new EventEmitter();
+
   actualizarCantidadProducto(detalleVenta: DetalleVenta, event: any): void {
     let cantidad = event.target.value as number;
     detalleVenta.cantidad = cantidad;
     detalleVenta.montoTotal = cantidad * detalleVenta.precioUnitario;
     this.actualizarDetalle.emit(detalleVenta);
+  }
+
+  eliminarProductoEvt(codigo:string): void {
+    this.eliminarDetalle.emit(codigo);
   }
 
 

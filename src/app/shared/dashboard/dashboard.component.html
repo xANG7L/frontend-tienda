@@ -6,12 +6,12 @@
     <hr>
     <div class="row mb-2">
         <div class="col-sm-12 col-mb-4 col-lg-4 col-xl-4 mb-2">
-            <div class="card shadow bg-success text-white">
+            <div class="card shadow text-success" style="border-left: 7px solid green;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-9">
                             <span>Productos registrados:</span>
-                            <h3 class="h3">0</h3>
+                            <h3 class="h3">{{cantidadProductos}}</h3>
                         </div>
                         <div class="col-3" style="font-size:40px;">
                             <i class="fa-solid fa-box"></i>
@@ -21,12 +21,12 @@
             </div>
         </div>
         <div class="col-sm-12 col-mb-4 col-lg-4 col-xl-4 mb-2">
-            <div class="card shadow bg-danger text-white">
+            <div class="card shadow text-danger" style="border-left: 7px solid red;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-9">
                             <span>Clientes registrados:</span>
-                            <h3 class="h3">0</h3>
+                            <h3 class="h3">{{cantidadClientes}}</h3>
                         </div>
                         <div class="col-3" style="font-size:40px;">
                             <i class="fa-solid fa-users"></i>
@@ -36,12 +36,12 @@
             </div>
         </div>
         <div class="col-sm-12 col-mb-4 col-lg-4 col-xl-4 mb-2">
-            <div class="card bg-dark text-white">
+            <div class="card shadow text-dark" style="border-left: 7px solid black;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-9">
                             <span>Ventas realizadas:</span>
-                            <h3 class="h3">0</h3>
+                            <h3 class="h3">{{cantidadVentas}}</h3>
                         </div>
                         <div class="col-3" style="font-size:40px;">
                             <i class="fa-solid fa-file-invoice"></i>
@@ -60,10 +60,11 @@
                     </div>
                     <!-- <div class="card-body"> -->
                     <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="table-dark">
+                        <table class="table table-hover table-bordered">
+                            <thead>
                                 <tr>
                                     <th scope="col">Correlativo</th>
+                                    <th scope="col">Dui</th>
                                     <th scope="col">Cliente</th>
                                     <th scope="col">Fecha</th>
                                     <th scope="col">Monto</th>
@@ -71,114 +72,28 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @for (venta of ventas; track $index) {
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Angel Ricardo</td>
-                                    <td>28/10/2024</td>
+                                    <td>{{venta.correlativo}}</td>
+                                    <td>{{venta.cliente.dui}}</td>
+                                    <td>{{venta.cliente.nombre}} {{venta.cliente.apellido}}</td>
+                                    <td>{{fechaFormateada(venta.fechaVenta)}}</td>
                                     <td>
-                                        <span class="badge text-bg-success">$30</span>
+                                        <span class="badge text-bg-success">${{venta.total}}</span>
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-outline-dark">
+                                            <button type="button" (click)="descargarFacturaEvt(venta)" class="btn btn-outline-dark btn-sm">
                                                 <i class="fa-solid fa-file-invoice"></i>
                                             </button>
-                                            <button type="button" class="btn btn-outline-danger">
+                                            <button type="button" (click)="anularVentaEvt(venta.codigoVenta)"
+                                                class="btn btn-outline-danger btn-sm">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Angel Ricardo</td>
-                                    <td>28/10/2024</td>
-                                    <td>
-                                        <span class="badge text-bg-success">$30</span>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-outline-dark">
-                                                <i class="fa-solid fa-file-invoice"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-outline-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Angel Ricardo</td>
-                                    <td>28/10/2024</td>
-                                    <td>
-                                        <span class="badge text-bg-success">$30</span>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-outline-dark">
-                                                <i class="fa-solid fa-file-invoice"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-outline-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Angel Ricardo</td>
-                                    <td>28/10/2024</td>
-                                    <td>
-                                        <span class="badge text-bg-success">$30</span>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-outline-dark">
-                                                <i class="fa-solid fa-file-invoice"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-outline-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Angel Ricardo</td>
-                                    <td>28/10/2024</td>
-                                    <td>
-                                        <span class="badge text-bg-success">$30</span>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-outline-dark">
-                                                <i class="fa-solid fa-file-invoice"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-outline-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Angel Ricardo</td>
-                                    <td>28/10/2024</td>
-                                    <td>
-                                        <span class="badge text-bg-success">$30</span>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-outline-dark">
-                                                <i class="fa-solid fa-file-invoice"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-outline-danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

@@ -2,7 +2,7 @@
     <div class="col-sm-12 col-lg-3 mb-3">
         <label for="txt-codigo" class="label-form-control">Codigo del cliente:</label>
         <input id="txt-codigo" type="text" class="form-control" placeholder="Codigo del cliente" name="codigo"
-            [(ngModel)]="venta.cliente.codigo" #codigo="ngModel" readonly>
+            [(ngModel)]="venta.cliente.codigo" #codigo="ngModel" required readonly>
     </div>
     <div class="col-sm-12 col-lg-3 mb-3">
         <label for="txt-dui" class="label-form-control">Dui del cliente:</label>
